@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
       theme: ThemeData(
         fontFamily: 'LemonMilk',
         primaryColor: Colors.blue,
-        accentColor: Colors.blue
+        // accentColor: Colors.blue
       ),
       home: SplashScreen(),
     );

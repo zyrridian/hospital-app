@@ -4,6 +4,6 @@ class TentangKamiOverview {
 
   String title, desc, image;
 
-  TentangKamiOverview({this.title, this.desc, this.image});
+  TentangKamiOverview({required this.title, required this.desc, required this.image});
 
 }

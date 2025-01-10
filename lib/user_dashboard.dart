@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/Project/FlutterProject/smkdev_hospital/lib/booking/booking.dart';
-import 'file:///D:/Project/FlutterProject/smkdev_hospital/lib/home/home.dart';
-import 'file:///D:/Project/FlutterProject/smkdev_hospital/lib/layanan/layanan.dart';
-import 'file:///D:/Project/FlutterProject/smkdev_hospital/lib/more/more.dart';
-import 'file:///D:/Project/FlutterProject/smkdev_hospital/lib/profile/profile.dart';
+import 'package:smkdev_hospital/booking/booking.dart';
+import 'package:smkdev_hospital/home/home.dart';
+import 'package:smkdev_hospital/layanan/layanan.dart';
+import 'package:smkdev_hospital/more/more.dart';
+import 'package:smkdev_hospital/profile/profile.dart';
 
 
 class UserDashboard extends StatefulWidget {

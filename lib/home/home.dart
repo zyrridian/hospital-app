@@ -1,5 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_pro/carousel_pro.dart';
+// import 'package:carousel_pro/carousel_pro.dart';
 import 'package:smkdev_hospital/home/home_appbar.dart';
 import 'package:smkdev_hospital/constant.dart';
 import 'package:smkdev_hospital/home/home_model.dart';
@@ -73,33 +74,46 @@ class _HomePageState extends State<HomePage> {
   Widget _buildCarousel() {
     return SizedBox(
       height: 250.0,
-      child: Carousel(
-        images: [
+      child: CarouselSlider(
+        options: CarouselOptions(
+          height: 250.0,
+          autoPlay: true,
+          enlargeCenterPage: true,
+          viewportFraction: 1.0,
+          autoPlayInterval: Duration(seconds: 3),
+          autoPlayAnimationDuration: Duration(milliseconds: 2000),
+          autoPlayCurve: Curves.fastOutSlowIn,
+        ),
+        items: [
           AssetImage("assets/images/sekilas.png"),
           AssetImage("assets/images/sekilas.png"),
           AssetImage("assets/images/sekilas.png"),
           AssetImage("assets/images/sekilas.png"),
-        ],
-        autoplay: true,
-        animationCurve: Curves.fastOutSlowIn,
-        animationDuration: Duration(milliseconds: 2000),
-        dotSize: 5.0,
-        indicatorBgPadding: 5.0,
-        dotBgColor: Colors.transparent,
+        ].map((image) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Image(
+                image: image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              );
+            },
+          );
+        }).toList(),
       ),
     );
-    return SizedBox(
-        height: 150.0,
-        width: 300.0,
-        child: Carousel(
-          images: [
-            NetworkImage(
-                'https://cdn-images-1.medium.com/max/2000/1*GqdzzfB_BHorv7V2NV7Jgg.jpeg'),
-            NetworkImage(
-                'https://cdn-images-1.medium.com/max/2000/1*wnIEgP1gNMrK5gZU7QS0-A.jpeg'),
-            // ExactAssetImage("assets/images/LaunchImage.jpg")
-          ],
-        ));
+    // return SizedBox(
+    //     height: 150.0,
+    //     width: 300.0,
+    //     child: Carousel(
+    //       images: [
+    //         NetworkImage(
+    //             'https://cdn-images-1.medium.com/max/2000/1*GqdzzfB_BHorv7V2NV7Jgg.jpeg'),
+    //         NetworkImage(
+    //             'https://cdn-images-1.medium.com/max/2000/1*wnIEgP1gNMrK5gZU7QS0-A.jpeg'),
+    //         // ExactAssetImage("assets/images/LaunchImage.jpg")
+    //       ],
+    //     ));
     // return Container(height: 270.0, color: Colors.grey);
   }
 
@@ -234,7 +248,6 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: [
                   Icon(Icons.location_on_outlined, color: Colors.grey),
-
                 ],
               ),
               Column(
@@ -252,7 +265,10 @@ class _HomePageState extends State<HomePage> {
             children: [
               InkWell(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => new LayananPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => new LayananPage()));
                   },
                   child: Row(
                     children: [
@@ -269,19 +285,24 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => new LayananPage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new LayananPage()));
                       },
                       child: Row(
                         children: [
                           Icon(Icons.phone_outlined, color: Colors.grey),
                           Text('+622 7000 0000')
                         ],
-                      )
-                  ),
+                      )),
                   SizedBox(width: 5.0),
                   InkWell(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => new LayananPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => new LayananPage()));
                     },
                     child: Row(
                       children: [
@@ -333,27 +354,31 @@ class _HomePageState extends State<HomePage> {
   // Row
   Widget _rowTentangKamiOverview(TentangKamiOverview tentangKamiOverview) {
     return Container(
-        child: SizedBox(
-            child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                elevation: 3.0,
-                color: Colors.white,
-                margin: EdgeInsets.only(top: 15.0, right: 15.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        child: Image.asset(
-                          tentangKamiOverview.image,
-                          height: 200.0,
-                          width: 150.0,
-                        ),
-                      ),
-                      Text(
-                        tentangKamiOverview.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(tentangKamiOverview.desc)
-                    ]))));
+      child: SizedBox(
+        child: Card(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          elevation: 3.0,
+          color: Colors.white,
+          margin: EdgeInsets.only(top: 15.0, right: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                child: Image.asset(
+                  tentangKamiOverview.image,
+                  height: 200.0,
+                  width: 150.0,
+                ),
+              ),
+              Text(
+                tentangKamiOverview.title,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(tentangKamiOverview.desc)
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

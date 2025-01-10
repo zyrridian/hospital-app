@@ -4,7 +4,7 @@ class FasilitasDanLayananTerkini {
   String title;
   String image;
 
-  FasilitasDanLayananTerkini({this.title, this.image});
+  FasilitasDanLayananTerkini({required this.title, required this.image});
 }
 
 class EventDanPromo {
@@ -12,5 +12,5 @@ class EventDanPromo {
   String date;
   String image;
 
-  EventDanPromo({this.title, this.date, this.image});
+  EventDanPromo({required this.title, required this.date, required this.image});
 }

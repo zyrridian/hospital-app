@@ -2,5 +2,5 @@ class Booking {
   String title;
   String desc;
   String image;
-  Booking({this.title, this.desc, this.image});
+  Booking({required this.title, required this.desc, required this.image});
 }
