@@ -62,6 +62,30 @@ class _HomePageState extends State<HomePage> {
     }
   ];
 
+  final Map<String, dynamic> mapData = {
+    'title': 'Temui Kami',
+    'image': 'assets/images/map.png',
+    'locations': [
+      {
+        'name': 'Rumah Sakit SMKDEV',
+        'address': 'Jln. Margacinta No. 29',
+        'hours': ['Senin - Jumat: 08.00 - 20.00', 'Sabtu: 08.00 - 17.00']
+      },
+      {
+        'name': 'Klinik SMKDEV',
+        'address': 'Jl. Mars Barat I No. 9',
+        'hours': ['Senin - Jumat: 08.00 - 20.00', 'Sabtu: 08.00 - 13.00']
+      },
+      {
+        'name': 'BPJS',
+        'hours': [
+          'Senin - Jumat: 07.00 - 14.00, 16.00 - 19.00',
+          'Sabtu: 07.00 - 12.00'
+        ]
+      }
+    ]
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,62 +214,52 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMap() {
-    return Container(
-        color: Colors.white,
-        margin: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            SizedBox(
-              // height: 300.0,
-              child: Card(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                elevation: 3.0,
-                color: Colors.white,
-                // margin: EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              mapData['title'],
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          const SizedBox(height: 8.0),
+          Image.asset(
+            mapData['image'],
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(height: 15.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: mapData['locations'].map<Widget>((location) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // SizedBox(height: 0.0),
-                    Image.asset("assets/images/test.png"),
-                    // SizedBox(height: 0.0),
-                    Row(
-                      children: [
-                        // SizedBox(height: 16.0),
-                        Text('aaa'),
-                        // SizedBox(height: 16.0),
-                        Text('aaa'),
-                      ],
+                    Text(
+                      location['name'],
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    // SizedBox(height: 16.0,)
+                    if (location.containsKey('address'))
+                      Text(location['address']),
+                    ...location['hours'].map<Widget>((hour) => Text(hour)),
                   ],
                 ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Rumah Sakit SMKDEV",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("Jln. Margacinta No. 29"),
-                  Text("Senin - Jumat: 08.00 - 20.00"),
-                  Text("Sabtu: 08.:00 - 17.00"),
-                  Padding(padding: const EdgeInsets.only(top: 15.0)),
-                  Text("Klinik SMKDEV",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("Jl. Mars Barat I No. 9"),
-                  Text("Senin - Jumat: 08.00 - 20.00"),
-                  Text("Sabtu: 08.00 - 13.00"),
-                  Padding(padding: const EdgeInsets.only(top: 15.0)),
-                  Text("BPJS", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("Senin - Jumat: 07.00 - 14.00, 16.00 - 19.00"),
-                  Text("Sabtu: 07.00 - 12.00"),
-                ],
-              ),
-            )
-          ],
-        ));
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildTentangKamiOverview() {
