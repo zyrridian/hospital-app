@@ -18,8 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
   startSplashScreen() async {
     var duration = const Duration(seconds: 3);
     return Timer(duration, () {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => UserDashboard()));
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => UserDashboard()),
+      );
     });
   }
 
@@ -28,7 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Image.asset('assets/images/logo.png', height: 260.0, width: 260.0)),
+        child: Image.asset(
+          'assets/images/logo.png',
+          height: 260.0,
+          width: 260.0,
+        ),
+      ),
     );
   }
 }

@@ -3,7 +3,7 @@ description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -26,11 +26,11 @@ dependencies:
 
   # carousel_pro: ^1.0.0
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   carousel_slider: ^5.0.0
+  flutter_lints: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -41,7 +41,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -85,13 +84,14 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   fonts:
-    - family: LemonMilk
+    - family: Poppins
       fonts:
-        - asset: assets/fonts/LemonMilkBold.otf
-        - asset: assets/fonts/LemonMilkBoldItalic.otf
-        - asset: assets/fonts/LemonMilkLight.otf
-        - asset: assets/fonts/LemonMilkLightItalic.otf
-        - asset: assets/fonts/LemonMilkMedium.otf
-        - asset: assets/fonts/LemonMilkMediumItalic.otf
-        - asset: assets/fonts/LemonMilkRegular.otf
-        - asset: assets/fonts/LemonMilkRegularItalic.otf
+        - asset: assets/fonts/Poppins-Black.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+        - asset: assets/fonts/Poppins-ExtraLight.ttf
+        - asset: assets/fonts/Poppins-Light.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Poppins-Thin.ttf

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smkdev_hospital/splash_screen.dart';
 
 void main() {
-  runApp(
-    HomePage()
-  );
+  runApp(HomePage());
 }
 
 class HomePage extends StatefulWidget {
@@ -19,7 +17,7 @@ class _HomePageState extends State<HomePage> {
       debugShowCheckedModeBanner: false,
       title: 'SMKDEV HOSPITAL',
       theme: ThemeData(
-        fontFamily: 'LemonMilk',
+        fontFamily: 'Poppins',
         primaryColor: Colors.blue,
         // accentColor: Colors.blue
       ),

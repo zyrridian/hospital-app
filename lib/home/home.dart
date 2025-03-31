@@ -40,87 +40,159 @@ class _HomePageState extends State<HomePage> {
         image: 'assets/images/test.png'));
   }
 
+  int _currentIndex = 0;
+  List<Map<String, String>> carouselData = [
+    {
+      'title': 'Sekilas Tentang\nRS. SMKDEV',
+      'description':
+          'SMKDEV komunitas developer siswa SMK jurusan Rekayasa Perangkat Lunak (RPL), Teknik Komputer dan Jaringan (TKJ), dan Multimedia (MM) dari seluruh Indonesia.',
+      'buttonText': 'Read'
+    },
+    {
+      'title': 'Layanan Kesehatan\nModern',
+      'description':
+          'Kami menyediakan layanan kesehatan berbasis teknologi terkini untuk memastikan pengalaman medis yang nyaman dan cepat.',
+      'buttonText': 'Learn More'
+    },
+    {
+      'title': 'Gabung dengan\nSMKDEV',
+      'description':
+          'SMKDEV membuka peluang bagi siswa untuk belajar dan berkembang dalam komunitas yang mendukung pertumbuhan profesional.',
+      'buttonText': 'Join Us'
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        // appBar: HomeAppBar(),
-        backgroundColor: Colors.white,
-        body: Container(
-          child: ListView(
-            physics: ClampingScrollPhysics(),
-            children: [
-              Container(
-                // padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    _buildCarousel(),
-                    _buildMap(),
-                    _buildTentangKamiOverview(),
-                    _buildBeritaTerbaruOverview(),
-                    _buildKontakDanPengaduanOverview()
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: ListView(
+        physics: const ClampingScrollPhysics(),
+        children: [
+          Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                _buildCarousel(),
+                _buildMap(),
+                _buildTentangKamiOverview(),
+                _buildBeritaTerbaruOverview(),
+                _buildKontakDanPengaduanOverview()
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
 
-  // Ini adalah fungsi untuk membuat bagian bagian tertentu pada halaman home
   Widget _buildCarousel() {
-    return SizedBox(
-      height: 250.0,
-      child: CarouselSlider(
-        options: CarouselOptions(
-          height: 250.0,
-          autoPlay: true,
-          enlargeCenterPage: true,
-          viewportFraction: 1.0,
-          autoPlayInterval: Duration(seconds: 3),
-          autoPlayAnimationDuration: Duration(milliseconds: 2000),
-          autoPlayCurve: Curves.fastOutSlowIn,
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Column(
+          children: [
+            CarouselSlider.builder(
+              itemCount: carouselData.length,
+              options: CarouselOptions(
+                height: 250.0,
+                autoPlay: true,
+                enlargeCenterPage: false,
+                viewportFraction: 1,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
+              itemBuilder: (context, index, realIndex) {
+                return Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(color: Colors.grey[300]),
+                  child: _buildCarouselItem(carouselData[index]),
+                );
+              },
+            ),
+          ],
         ),
-        items: [
-          AssetImage("assets/images/sekilas.png"),
-          AssetImage("assets/images/sekilas.png"),
-          AssetImage("assets/images/sekilas.png"),
-          AssetImage("assets/images/sekilas.png"),
-        ].map((image) {
-          return Builder(
-            builder: (BuildContext context) {
-              return Image(
-                image: image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              );
-            },
+        _buildCarouselIndicator(),
+      ],
+    );
+  }
+
+  Widget _buildCarouselItem(Map<String, String> data) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 16),
+          Text(
+            data['title'] ?? '',
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            data['description'] ?? '',
+            style: const TextStyle(fontSize: 14, color: Colors.black54),
+          ),
+          const Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const SizedBox(width: 48),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: Text(
+                  data['buttonText'] ?? 'Read',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCarouselIndicator() {
+    return Positioned(
+      left: 16,
+      bottom: 32,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: carouselData.asMap().entries.map((entry) {
+          bool isSelected = _currentIndex == entry.key;
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            width: isSelected ? 16.0 : 8.0,
+            height: 8.0,
+            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(4),
+              color: isSelected ? Colors.blue : Colors.grey,
+            ),
           );
         }).toList(),
       ),
     );
-    // return SizedBox(
-    //     height: 150.0,
-    //     width: 300.0,
-    //     child: Carousel(
-    //       images: [
-    //         NetworkImage(
-    //             'https://cdn-images-1.medium.com/max/2000/1*GqdzzfB_BHorv7V2NV7Jgg.jpeg'),
-    //         NetworkImage(
-    //             'https://cdn-images-1.medium.com/max/2000/1*wnIEgP1gNMrK5gZU7QS0-A.jpeg'),
-    //         // ExactAssetImage("assets/images/LaunchImage.jpg")
-    //       ],
-    //     ));
-    // return Container(height: 270.0, color: Colors.grey);
   }
 
   Widget _buildMap() {
     return Container(
         color: Colors.white,
-        margin: EdgeInsets.all(20.0),
+        margin: const EdgeInsets.all(20.0),
         child: Column(
           children: [
             SizedBox(
