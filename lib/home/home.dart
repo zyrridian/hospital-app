@@ -86,6 +86,24 @@ class _HomePageState extends State<HomePage> {
     ]
   };
 
+  final List<Map<String, String>> doctorData = [
+    {
+      'name': 'dr. Setiawai, SpM',
+      'specialty': 'Katarak dan Bedah Refraktif',
+      'image': 'assets/images/test.png'
+    },
+    {
+      'name': 'dr. Angger Pribadi, SpMM',
+      'specialty': 'Vitreo Retina',
+      'image': 'assets/images/test.png'
+    },
+    {
+      'name': 'dr. Daffa, SpA',
+      'specialty': 'Pediatrik',
+      'image': 'assets/images/test.png'
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -236,12 +254,12 @@ class _HomePageState extends State<HomePage> {
             width: double.infinity,
             fit: BoxFit.cover,
           ),
-          const SizedBox(height: 15.0),
+          const SizedBox(height: 16.0),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: mapData['locations'].map<Widget>((location) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
+                padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -264,26 +282,40 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildTentangKamiOverview() {
     return Container(
-      padding: EdgeInsets.all(20.0),
-      // height: 300.0,
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       color: Colors.blue,
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Tentang Kami',
-                  style: TextStyle(fontSize: 16.0, color: Colors.white)),
-              Text('Selengkapnya',
-                  style: TextStyle(fontSize: 10.0, color: Colors.white))
-            ],
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Tentang Kami',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  'Selengkapnya',
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
           ),
-          SizedBox(
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Card(
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              elevation: 3.0,
               color: Colors.white,
-              margin: EdgeInsets.only(top: 15.0),
+              elevation: 0,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -292,22 +324,67 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          // Container(
-          //     child: Expanded(
-          //       // height: 400.0,
-          //       child: ListView.builder(
-          //           shrinkWrap: true,
-          //           itemCount: _tentangKamiOverview.length,
-          //           padding: EdgeInsets.only(top: 12.0),
-          //           physics: ClampingScrollPhysics(),
-          //           scrollDirection: Axis.horizontal,
-          //           itemBuilder: (context, index) {
-          //             return _rowTentangKamiOverview(
-          //                 _tentangKamiOverview[index]);
-          //           }),
-          //     ),
-          // )
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 250,
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              scrollDirection: Axis.horizontal,
+              itemCount: doctorData.length,
+              itemBuilder: (context, index) {
+                final doctor = doctorData[index];
+                return _buildDoctorCard(doctor);
+              },
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDoctorCard(Map<String, String> doctor) {
+    return Container(
+      width: 180,
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        clipBehavior: Clip.antiAlias,
+        elevation: 0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Image.asset(
+                doctor['image'] ?? 'assets/images/test.png',
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    doctor['name'] ?? '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    doctor['specialty'] ?? '',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -321,15 +398,15 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildKontakDanPengaduanOverview() {
     return Container(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       color: Colors.blue,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Kontak & Pengaduan',
+          const Text('Kontak & Pengaduan',
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-          Divider(height: 15.0),
-          Row(
+          const Divider(height: 15.0),
+          const Row(
             children: [
               Column(
                 children: [
@@ -346,7 +423,7 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          Divider(height: 12.0),
+          const Divider(height: 12.0),
           Column(
             children: [
               InkWell(
@@ -356,7 +433,7 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(
                             builder: (context) => new LayananPage()));
                   },
-                  child: Row(
+                  child: const Row(
                     children: [
                       Icon(Icons.mail_outline, color: Colors.grey),
                       Text('info@smk.dev', style: TextStyle(fontSize: 12.0)),
@@ -364,7 +441,7 @@ class _HomePageState extends State<HomePage> {
                   ))
             ],
           ),
-          Divider(height: 12.0),
+          const Divider(height: 12.0),
           Column(
             children: [
               Row(
@@ -376,7 +453,7 @@ class _HomePageState extends State<HomePage> {
                             MaterialPageRoute(
                                 builder: (context) => new LayananPage()));
                       },
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(Icons.phone_outlined, color: Colors.grey),
                           Text('+622 7000 0000')
@@ -390,7 +467,7 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => new LayananPage()));
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.apartment_outlined, color: Colors.grey),
                         Text('+622 7000 0000')
