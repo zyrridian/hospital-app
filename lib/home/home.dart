@@ -104,6 +104,39 @@ class _HomePageState extends State<HomePage> {
     }
   ];
 
+  final List<Map<String, String>> newsData = [
+    {
+      'title': 'Training Center',
+      'content':
+          'Training Center bekerjasama dengan SMKDEV untuk meningkatkan keterampilan siswa dalam bidang teknologi. Program ini mencakup pelatihan intensif, sertifikasi, dan bimbingan industri dari para mentor profesional.',
+      'image': 'assets/images/test.png'
+    },
+    {
+      'title': 'Baksos SMKDEV',
+      'content':
+          'Untuk kesekian kalinya, SMKDEV melakukan bakti sosial dengan membagikan paket sembako dan alat tulis kepada masyarakat yang membutuhkan. Kegiatan ini menjadi bentuk kepedulian sosial komunitas terhadap lingkungan sekitar.',
+      'image': 'assets/images/test.png'
+    },
+    {
+      'title': 'Lomba Coding Nasional',
+      'content':
+          'SMKDEV kembali mengadakan Lomba Coding Nasional yang diikuti oleh ratusan peserta dari berbagai daerah. Lomba ini bertujuan untuk mengasah keterampilan pemrograman siswa dan memberikan pengalaman kompetitif di tingkat nasional.',
+      'image': 'assets/images/test.png'
+    },
+    {
+      'title': 'Bootcamp Web Development',
+      'content':
+          'SMKDEV meluncurkan Bootcamp Web Development dengan kurikulum terbaru yang mencakup teknologi modern seperti React, Next.js, dan Tailwind CSS. Program ini dirancang untuk membekali peserta dengan keterampilan siap kerja dalam industri teknologi.',
+      'image': 'assets/images/test.png'
+    },
+    {
+      'title': 'Kunjungan Industri ke Perusahaan Teknologi',
+      'content':
+          'Para siswa SMKDEV mendapatkan kesempatan untuk melakukan kunjungan industri ke beberapa perusahaan teknologi ternama. Dalam kunjungan ini, mereka belajar langsung dari para profesional mengenai proses pengembangan perangkat lunak dan budaya kerja di industri IT.',
+      'image': 'assets/images/test.png'
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,8 +151,8 @@ class _HomePageState extends State<HomePage> {
                 _buildCarousel(),
                 _buildMap(),
                 _buildTentangKamiOverview(),
-                _buildBeritaTerbaruOverview(),
-                _buildKontakDanPengaduanOverview()
+                _buildNewsSection(),
+                _buildKontakDanPengaduanOverview(),
               ],
             ),
           )
@@ -349,7 +382,8 @@ class _HomePageState extends State<HomePage> {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         clipBehavior: Clip.antiAlias,
-        elevation: 0,
+        color: Colors.white,
+        // elevation: 0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -361,7 +395,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -372,7 +406,7 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 8),
                   Text(
                     doctor['specialty'] ?? '',
                     style: TextStyle(
@@ -389,158 +423,157 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBeritaTerbaruOverview() {
+  Widget _buildNewsSection() {
     return Container(
-      height: 300.0,
-      color: Colors.white,
-    );
-  }
-
-  Widget _buildKontakDanPengaduanOverview() {
-    return Container(
-      padding: const EdgeInsets.all(20.0),
-      color: Colors.blue,
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Kontak & Pengaduan',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-          const Divider(height: 15.0),
-          const Row(
-            children: [
-              Column(
-                children: [
-                  Icon(Icons.location_on_outlined, color: Colors.grey),
-                ],
-              ),
-              Column(
-                children: [
-                  Text('Rumah Sakit SMKDEV',
-                      style: TextStyle(
-                          fontSize: 12.0, fontWeight: FontWeight.bold)),
-                  Text('Jl. Margacinta No. 29')
-                ],
-              )
-            ],
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Berita Terbaru',
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  'Selengkapnya',
+                  style: TextStyle(
+                    fontSize: 12.0,
+                  ),
+                )
+              ],
+            ),
           ),
-          const Divider(height: 12.0),
-          Column(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => new LayananPage()));
-                  },
-                  child: const Row(
-                    children: [
-                      Icon(Icons.mail_outline, color: Colors.grey),
-                      Text('info@smk.dev', style: TextStyle(fontSize: 12.0)),
-                    ],
-                  ))
-            ],
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 250,
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              scrollDirection: Axis.horizontal,
+              itemCount: newsData.length,
+              itemBuilder: (context, index) {
+                final news = newsData[index];
+                return _buildNewsItem(news);
+              },
+            ),
           ),
-          const Divider(height: 12.0),
-          Column(
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => new LayananPage()));
-                      },
-                      child: const Row(
-                        children: [
-                          Icon(Icons.phone_outlined, color: Colors.grey),
-                          Text('+622 7000 0000')
-                        ],
-                      )),
-                  SizedBox(width: 5.0),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => new LayananPage()));
-                    },
-                    child: const Row(
-                      children: [
-                        Icon(Icons.apartment_outlined, color: Colors.grey),
-                        Text('+622 7000 0000')
-                      ],
-                    ),
-                  )
-                ],
-              )
-            ],
-          )
-
-          // Row(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Icon(Icons.location_on_outlined, color: Colors.grey),
-          //         Icon(Icons.mail_outline, color: Colors.grey),
-          //         Icon(Icons.phone_outlined, color: Colors.grey)
-          //       ],
-          //     ),
-          //     Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Text('Rumah Sakit SMKDEV', style: TextStyle(fontWeight: FontWeight.bold)),
-          //         Text('Jl. Margacinta No. 29', style: TextStyle(fontSize: 10.0)),
-          //         Divider(height: 12.0),
-          //         Text('info@smk.dev', style: TextStyle(fontSize: 10.0)),
-          //         Row(
-          //           crossAxisAlignment: CrossAxisAlignment.start,
-          //           children: [
-          //             Text('+622 7000 0000'),
-          //             Icon(Icons.apartment_outlined, color: Colors.grey),
-          //             Text('+622 7000 0000')
-          //           ],
-          //         )
-          //       ],
-          //     )
-          //   ],
-          // )
         ],
       ),
     );
   }
 
-  // Row
-  Widget _rowTentangKamiOverview(TentangKamiOverview tentangKamiOverview) {
+  Widget _buildNewsItem(Map<String, String> news) {
     return Container(
-      child: SizedBox(
-        child: Card(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          elevation: 3.0,
-          color: Colors.white,
-          margin: EdgeInsets.only(top: 15.0, right: 15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      width: 240,
+      margin: const EdgeInsets.symmetric(horizontal: 4),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        clipBehavior: Clip.antiAlias,
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Image.asset(
+                news['image'] ?? 'assets/images/test.png',
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    news['title'] ?? '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    news['content'] ?? '',
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKontakDanPengaduanOverview() {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Kontak & Pengaduan',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: 12.0),
+          Row(
             children: [
-              ClipRRect(
-                child: Image.asset(
-                  tentangKamiOverview.image,
-                  height: 200.0,
-                  width: 150.0,
-                ),
-              ),
-              Text(
-                tentangKamiOverview.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(tentangKamiOverview.desc)
+              Icon(Icons.location_on_outlined, color: Colors.grey),
+              SizedBox(width: 8.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Rumah Sakit SMKDEV',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    'Jl. Margacinta No. 29',
+                    style: TextStyle(fontSize: 12),
+                  )
+                ],
+              )
             ],
           ),
-        ),
+          SizedBox(height: 12.0),
+          Row(
+            children: [
+              Icon(Icons.mail_outline, color: Colors.grey),
+              SizedBox(width: 8.0),
+              Text('info@smk.dev', style: TextStyle(fontSize: 12)),
+            ],
+          ),
+          SizedBox(height: 12.0),
+          Row(
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.phone_outlined, color: Colors.grey),
+                  SizedBox(width: 8.0),
+                  Text('+62 7000 0000', style: TextStyle(fontSize: 12))
+                ],
+              ),
+              SizedBox(width: 24.0),
+              Row(
+                children: [
+                  Icon(Icons.apartment_outlined, color: Colors.grey),
+                  SizedBox(width: 8.0),
+                  Text('+62 7000 0000', style: TextStyle(fontSize: 12))
+                ],
+              )
+            ],
+          )
+        ],
       ),
     );
   }
