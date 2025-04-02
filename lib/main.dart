@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:smkdev_hospital/splash_screen.dart';
+import 'package:smkdev_hospital/main/main_page.dart';
 
 void main() {
-  runApp(HomePage());
+  runApp(const MyApp());
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +19,7 @@ class _HomePageState extends State<HomePage> {
         primaryColor: Colors.blue,
         // accentColor: Colors.blue
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

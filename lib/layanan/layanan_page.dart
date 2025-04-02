@@ -6,8 +6,10 @@ import 'package:smkdev_hospital/layanan/layanan_appbar.dart';
 import 'package:smkdev_hospital/layanan/layanan_model.dart';
 
 class LayananPage extends StatefulWidget {
+  const LayananPage({super.key});
+
   @override
-  _LayananPageState createState() => _LayananPageState();
+  State<LayananPage> createState() => _LayananPageState();
 }
 
 class _LayananPageState extends State<LayananPage> {
