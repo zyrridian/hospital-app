@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:smkdev_hospital/home/home.data.dart';
+import 'package:smkdev_hospital/home/home_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: ListView(
         physics: const ClampingScrollPhysics(),
@@ -25,9 +26,9 @@ class _HomePageState extends State<HomePage> {
               children: [
                 _buildCarousel(),
                 _buildMap(),
-                _buildTentangKamiOverview(),
+                _buildAboutUs(),
                 _buildNewsSection(),
-                _buildKontakDanPengaduanOverview(),
+                _buildContact(),
               ],
             ),
           )
@@ -188,7 +189,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTentangKamiOverview() {
+  Widget _buildAboutUs() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       color: Colors.blue,
@@ -326,7 +327,7 @@ class _HomePageState extends State<HomePage> {
           ),
           const SizedBox(height: 8),
           SizedBox(
-            height: 250,
+            height: 240,
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               scrollDirection: Axis.horizontal,
@@ -390,7 +391,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildKontakDanPengaduanOverview() {
+  Widget _buildContact() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: const Column(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smkdev_hospital/booking/booking_page.dart';
 import 'package:smkdev_hospital/home/home_page.dart';
-import 'package:smkdev_hospital/layanan/layanan_page.dart';
+import 'package:smkdev_hospital/service/service_page.dart';
 import 'package:smkdev_hospital/more/more_page.dart';
 import 'package:smkdev_hospital/profile/profile_page.dart';
 
@@ -73,6 +73,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      resizeToAvoidBottomInset: false,
       body: NotificationListener<ScrollNotification>(
         onNotification: onScrollNotification,
         child: pageList[_bottomNavIndex],
