@@ -83,7 +83,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           backgroundColor: Colors.blue,
           elevation: 6,
           child: const Icon(Icons.calendar_today_outlined, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const BookingPage(),
+              ),
+            );
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
