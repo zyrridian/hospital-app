@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: ListView(
-        physics: const ClampingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: [
           Container(
             color: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smkdev_hospital/booking/booking_data.dart';
+import 'package:smkdev_hospital/booking/booking_detail_page.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
@@ -39,7 +40,15 @@ class _BookingPageState extends State<BookingPage> {
                 itemBuilder: (context, index) {
                   final doctor = doctors[index];
                   return InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BookingDetailPage(doctor: doctor),
+                        ),
+                      );
+                    },
                     child: _buildBookingItem(doctor),
                   );
                 },
@@ -51,7 +60,7 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  Widget _buildBookingItem(Map<String, String> doctor) {
+  Widget _buildBookingItem(Map<String, dynamic> doctor) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: Row(
