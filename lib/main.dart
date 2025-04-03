@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smkdev_hospital/splash_screen.dart';
-import 'package:smkdev_hospital/main/main_page.dart';
 
 void main() {
   runApp(const MyApp());

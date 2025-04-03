@@ -50,9 +50,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       vsync: this,
     );
 
-    Future.delayed(const Duration(milliseconds: 200), () {
-      _fabAnimationController.forward();
-    });
+    _fabAnimationController.forward();
   }
 
   bool onScrollNotification(ScrollNotification notification) {

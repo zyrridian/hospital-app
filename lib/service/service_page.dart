@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smkdev_hospital/service/service_data.dart';
+import 'package:smkdev_hospital/service/service_detail_page.dart';
 
 class LayananPage extends StatefulWidget {
   const LayananPage({super.key});
@@ -31,7 +32,7 @@ class _LayananPageState extends State<LayananPage> {
                 _buildAppBar(),
                 _buildSearchBar(),
                 _buildFacilitySection(),
-                _buildEventSection()
+                _buildEventPromoSection()
               ],
             ),
           )
@@ -111,8 +112,26 @@ class _LayananPageState extends State<LayananPage> {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return _buildFacilityItem(
-                  facilityData[index],
+                final facility = facilityData[index];
+                return InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ServiceDetailPage(
+                          type: 'facility',
+                          title: facility['title'] ?? '',
+                          content: facility['content'] ?? '',
+                          date: facility['date'] ?? '',
+                          image: facility['image'] ?? '',
+                          meta: facility['meta'] ?? '',
+                        ),
+                      ),
+                    );
+                  },
+                  child: _buildFacilityItem(facility),
                 );
               },
             ),
@@ -162,7 +181,7 @@ class _LayananPageState extends State<LayananPage> {
                   ),
                 ),
                 child: Text(
-                  facility['name'] ?? '',
+                  facility['title'] ?? '',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -179,7 +198,7 @@ class _LayananPageState extends State<LayananPage> {
     );
   }
 
-  Widget _buildEventSection() {
+  Widget _buildEventPromoSection() {
     return Container(
       padding: const EdgeInsets.only(top: 24.0),
       color: Colors.white,
@@ -196,15 +215,33 @@ class _LayananPageState extends State<LayananPage> {
               ),
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           ListView.builder(
-            itemCount: eventData.length,
+            itemCount: eventPromoData.length,
             physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 12),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return _buildEventItem(
-                eventData[index],
+              final eventPromo = eventPromoData[index];
+              return InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ServiceDetailPage(
+                        type: eventPromo['type'] ?? '',
+                        title: eventPromo['title'] ?? '',
+                        content: eventPromo['content'] ?? '',
+                        date: eventPromo['date'] ?? '',
+                        image: eventPromo['image'] ?? '',
+                        meta: eventPromo['meta'] ?? '',
+                      ),
+                    ),
+                  );
+                },
+                child: _buildEventPromoItem(eventPromo),
               );
             },
           )
@@ -213,11 +250,11 @@ class _LayananPageState extends State<LayananPage> {
     );
   }
 
-  Widget _buildEventItem(Map<String, String> event) {
+  Widget _buildEventPromoItem(Map<String, String> event) {
     return Container(
       width: double.infinity,
       height: 280,
-      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         clipBehavior: Clip.antiAlias,
@@ -247,13 +284,13 @@ class _LayananPageState extends State<LayananPage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    event['name'] ?? '',
+                    event['title'] ?? '',
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
                   Text(
                     event['date'] ?? '',
                     maxLines: 2,
