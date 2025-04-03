@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smkdev_hospital/booking/booking_confirm_page.dart';
 
 class BookingDetailPage extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -56,7 +57,8 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                        widget.doctor['image'] ?? 'assets/images/test.png'),
+                      widget.doctor['image'] ?? 'assets/images/test.png',
+                    ),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: const BorderRadius.only(
@@ -414,7 +416,17 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookingConfirmPage(
+                              doctor: widget.doctor,
+                            ),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         backgroundColor: Colors.blue,
