@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smkdev_hospital/booking/booking_patient_page.dart';
+import 'package:smkdev_hospital/booking/booking_success_page.dart';
 
 class BookingConfirmPage extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -269,7 +270,14 @@ class _BookingConfirmPageState extends State<BookingConfirmPage> {
           width: MediaQuery.of(context).size.width * 0.9,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BookingSuccessPage(),
+                ),
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue,
               shape: RoundedRectangleBorder(
