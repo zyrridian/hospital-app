@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smkdev_hospital/booking/booking_patient_page.dart';
 
 class BookingConfirmPage extends StatefulWidget {
   final Map<String, dynamic> doctor;
@@ -80,33 +81,47 @@ class _BookingConfirmPageState extends State<BookingConfirmPage> {
             Container(
               width: double.infinity,
               color: Colors.grey[200],
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 16.0,
+                  left: 16,
+                  right: 16,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Booking Untuk',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Text(
-                          'Ganti Pasien',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w600,
+                        TextButton(
+                          onPressed: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookingPatientPage(),
+                              ),
+                            ),
+                          },
+                          child: const Text(
+                            'Ganti Pasien',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'Nama: ',
@@ -124,8 +139,8 @@ class _BookingConfirmPageState extends State<BookingConfirmPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 2),
-                    Row(
+                    const SizedBox(height: 2),
+                    const Row(
                       children: [
                         Text(
                           'Jenis Kelamin: ',
@@ -143,8 +158,8 @@ class _BookingConfirmPageState extends State<BookingConfirmPage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 2),
-                    Row(
+                    const SizedBox(height: 2),
+                    const Row(
                       children: [
                         Text(
                           'Status: ',
