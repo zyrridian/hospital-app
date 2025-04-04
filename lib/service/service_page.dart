@@ -72,6 +72,7 @@ class _LayananPageState extends State<LayananPage> {
             const SizedBox(width: 8),
             Expanded(
               child: TextField(
+                cursorColor: Colors.blue,
                 style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   border: InputBorder.none,

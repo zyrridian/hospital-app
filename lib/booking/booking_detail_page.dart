@@ -274,6 +274,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
               const Text('Nama', style: TextStyle(fontWeight: FontWeight.w500)),
               const SizedBox(height: 4),
               const TextField(
+                cursorColor: Colors.blue,
                 style: TextStyle(fontSize: 14),
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
@@ -335,6 +336,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
               ),
               const SizedBox(height: 4),
               const TextField(
+                cursorColor: Colors.blue,
                 style: TextStyle(fontSize: 14),
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
@@ -367,6 +369,7 @@ class _BookingDetailPageState extends State<BookingDetailPage> {
               ),
               const SizedBox(height: 4),
               const TextField(
+                cursorColor: Colors.blue,
                 style: TextStyle(fontSize: 14),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(

@@ -230,6 +230,7 @@ class _BookingConfirmPageState extends State<BookingConfirmPage> {
                   ),
                   SizedBox(height: 4),
                   TextField(
+                    cursorColor: Colors.blue,
                     style: TextStyle(fontSize: 14),
                     keyboardType: TextInputType.multiline,
                     maxLines: 5,
