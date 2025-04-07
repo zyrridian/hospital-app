@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:smkdev_hospital/service/service_data.dart';
-import 'package:smkdev_hospital/service/service_detail_page.dart';
+import 'package:smkdev_hospital/partnercareer/partner_career_data.dart';
+import 'package:smkdev_hospital/partnercareer/partner_career_detail_page.dart';
 
-class LayananPage extends StatefulWidget {
-  const LayananPage({super.key});
+class PartnerCareerPage extends StatefulWidget {
+  const PartnerCareerPage({super.key});
 
   @override
-  State<LayananPage> createState() => _LayananPageState();
+  State<PartnerCareerPage> createState() => _PartnerCareerPageState();
 }
 
-class _LayananPageState extends State<LayananPage> {
+class _PartnerCareerPageState extends State<PartnerCareerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +26,7 @@ class _LayananPageState extends State<LayananPage> {
               children: [
                 _buildAppBar(),
                 _buildSearchBar(),
-                _buildFacilitySection(),
+                _buildPartnerSection(),
                 _buildEventPromoSection()
               ],
             ),
@@ -40,7 +40,7 @@ class _LayananPageState extends State<LayananPage> {
     return const Padding(
       padding: EdgeInsets.only(left: 24, right: 24, top: 24),
       child: Text(
-        'Layanan',
+        'Partner & Career',
         textAlign: TextAlign.left,
         style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
       ),
@@ -71,7 +71,7 @@ class _LayananPageState extends State<LayananPage> {
                 style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Search dokter, fasilitas & layanan',
+                  hintText: 'Search partner & lowongan',
                   hintStyle: TextStyle(color: Colors.grey.withOpacity(0.6)),
                 ),
               ),
@@ -82,7 +82,7 @@ class _LayananPageState extends State<LayananPage> {
     );
   }
 
-  Widget _buildFacilitySection() {
+  Widget _buildPartnerSection() {
     return Container(
       padding: const EdgeInsets.only(top: 24.0),
       color: Colors.white,
@@ -92,7 +92,7 @@ class _LayananPageState extends State<LayananPage> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              'Fasilitas dan Layanan Terkini',
+              'Partner',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -101,14 +101,14 @@ class _LayananPageState extends State<LayananPage> {
           ),
           const SizedBox(height: 8),
           SizedBox(
-            height: 200.0,
+            height: 160.0,
             child: ListView.builder(
-              itemCount: facilityData.length,
+              itemCount: partnerData.length,
               physics: const ClampingScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 12),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                final facility = facilityData[index];
+                final facility = partnerData[index];
                 return InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -116,8 +116,8 @@ class _LayananPageState extends State<LayananPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ServiceDetailPage(
-                          type: 'facility',
+                        builder: (context) => PartnerCareerDetailPage(
+                          type: 'lowongan',
                           title: facility['title'] ?? '',
                           content: facility['content'] ?? '',
                           date: facility['date'] ?? '',
@@ -127,7 +127,7 @@ class _LayananPageState extends State<LayananPage> {
                       ),
                     );
                   },
-                  child: _buildFacilityItem(facility),
+                  child: _buildPartnerItem(facility),
                 );
               },
             ),
@@ -137,7 +137,7 @@ class _LayananPageState extends State<LayananPage> {
     );
   }
 
-  Widget _buildFacilityItem(Map<String, String> facility) {
+  Widget _buildPartnerItem(Map<String, String> facility) {
     return Container(
       width: 180,
       color: Colors.white,
@@ -148,43 +148,21 @@ class _LayananPageState extends State<LayananPage> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.grey.shade300,
+                    width: 0.5,
+                  ),
+                ),
+                clipBehavior: Clip.hardEdge,
                 child: Image.asset(
                   facility['image'] ?? 'assets/images/test.png',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0),
-                      Colors.black.withOpacity(0.3),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
-                  ),
-                ),
-                child: Text(
-                  facility['title'] ?? '',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                  // fit: BoxFit.cover,
+                  // width: double.infinity,
                 ),
               ),
             ),
@@ -204,7 +182,7 @@ class _LayananPageState extends State<LayananPage> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              'Event & Promo',
+              'Lowongan',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -213,12 +191,12 @@ class _LayananPageState extends State<LayananPage> {
           ),
           const SizedBox(height: 2),
           ListView.builder(
-            itemCount: eventPromoData.length,
+            itemCount: lowonganData.length,
             physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 12),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              final eventPromo = eventPromoData[index];
+              final eventPromo = lowonganData[index];
               return InkWell(
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
@@ -226,7 +204,7 @@ class _LayananPageState extends State<LayananPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ServiceDetailPage(
+                      builder: (context) => PartnerCareerDetailPage(
                         type: eventPromo['type'] ?? '',
                         title: eventPromo['title'] ?? '',
                         content: eventPromo['content'] ?? '',

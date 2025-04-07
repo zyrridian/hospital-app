@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:smkdev_hospital/booking/booking_page.dart';
 import 'package:smkdev_hospital/home/home_page.dart';
 import 'package:smkdev_hospital/more/about_us_page.dart';
+import 'package:smkdev_hospital/partnercareer/partner_career_page.dart';
 import 'package:smkdev_hospital/service/service_page.dart';
 import 'package:smkdev_hospital/more/more_page.dart';
 import 'package:smkdev_hospital/profile/profile_page.dart';
@@ -136,7 +137,12 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                       break;
                     case 2:
                       // Partner & Career
-                      print('Navigate to Partner & Career Page');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PartnerCareerPage(),
+                        ),
+                      );
                       break;
                     case 3:
                       // Tentang Kami
