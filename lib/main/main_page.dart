@@ -31,7 +31,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   final List<Widget> pageList = [
     const HomePage(),
     const LayananPage(),
-    const BookingPage(),
+    // const BookingPage(),
     const ProfilePage(),
     const MorePage(),
   ];
