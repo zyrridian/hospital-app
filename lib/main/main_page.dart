@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smkdev_hospital/booking/booking_page.dart';
 import 'package:smkdev_hospital/home/home_page.dart';
+import 'package:smkdev_hospital/more/about_us_page.dart';
 import 'package:smkdev_hospital/service/service_page.dart';
 import 'package:smkdev_hospital/more/more_page.dart';
 import 'package:smkdev_hospital/profile/profile_page.dart';
@@ -118,11 +119,35 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
               bottom: 80,
               child: _MoreFloatingMenu(
                 controller: _moreMenuController,
-                onItemTap: () {
+                onItemTap: (index) {
                   setState(() {
                     showMoreMenu = false;
                     _moreMenuController.reverse();
                   });
+
+                  switch (index) {
+                    case 0:
+                      // Feedback
+                      print('Navigate to Feedback Page');
+                      break;
+                    case 1:
+                      // Event & Promo
+                      print('Navigate to Event & Promo Page');
+                      break;
+                    case 2:
+                      // Partner & Career
+                      print('Navigate to Partner & Career Page');
+                      break;
+                    case 3:
+                      // Tentang Kami
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AboutUsPage(),
+                        ),
+                      );
+                      break;
+                  }
                 },
               ),
             ),
@@ -187,60 +212,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   }
 }
 
-class MoreMenuSheet extends StatelessWidget {
-  const MoreMenuSheet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      child: const Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _MoreMenuItem(icon: Icons.people_alt_outlined, text: 'Tentang Kami'),
-          _MoreMenuItem(icon: Icons.work_outline, text: 'Partner & Career'),
-          _MoreMenuItem(icon: Icons.star_border, text: 'Event & Promo'),
-          _MoreMenuItem(icon: Icons.favorite_border, text: 'Feedback'),
-        ],
-      ),
-    );
-  }
-}
-
-class _MoreMenuItem extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const _MoreMenuItem({required this.icon, required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: ListTile(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-        title: Text(text, style: const TextStyle(fontWeight: FontWeight.w600)),
-        trailing: Icon(icon, color: Colors.blue),
-        onTap: () {
-          // Handle tap (e.g., navigate to new screen or show toast)
-          Navigator.pop(context); // Close modal
-        },
-      ),
-    );
-  }
-}
-
 class _MoreFloatingMenu extends StatelessWidget {
   final AnimationController controller;
-  final VoidCallback onItemTap;
+  final void Function(int index) onItemTap;
 
   const _MoreFloatingMenu({
     super.key,
@@ -251,16 +225,15 @@ class _MoreFloatingMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
-      {'icon': Icons.people_outline, 'label': 'Tentang Kami'},
-      {'icon': Icons.work_outline, 'label': 'Partner & Career'},
-      {'icon': Icons.star_border, 'label': 'Event & Promo'},
       {'icon': Icons.favorite_border, 'label': 'Feedback'},
+      {'icon': Icons.star_border, 'label': 'Event & Promo'},
+      {'icon': Icons.work_outline, 'label': 'Partner & Career'},
+      {'icon': Icons.people_outline, 'label': 'Tentang Kami'},
     ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: List.generate(items.length, (i) {
-        // Animate bottom-to-top
         final index = items.length - 1 - i;
         final animation = Tween<Offset>(
           begin: const Offset(0, 0.2),
@@ -282,11 +255,13 @@ class _MoreFloatingMenu extends StatelessWidget {
           child: FadeTransition(
             opacity: fade,
             child: GestureDetector(
-              onTap: onItemTap,
+              onTap: () => onItemTap(index),
               child: Container(
                 margin: const EdgeInsets.only(bottom: 8),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
