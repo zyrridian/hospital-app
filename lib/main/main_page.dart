@@ -18,6 +18,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   var _bottomNavIndex = 0;
   late AnimationController _fabAnimationController;
   late AnimationController _hideBottomBarAnimationController;
+  late AnimationController _moreMenuController;
+  bool showMoreMenu = false;
 
   final iconList = <IconData>[
     Icons.home_outlined,
@@ -31,7 +33,6 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   final List<Widget> pageList = [
     const HomePage(),
     const LayananPage(),
-    // const BookingPage(),
     const ProfilePage(),
     const MorePage(),
   ];
@@ -51,9 +52,24 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     );
 
     _fabAnimationController.forward();
+
+    _moreMenuController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
   }
 
   bool onScrollNotification(ScrollNotification notification) {
+    // only close menu on direct user scroll start (touch interaction)
+    if (notification is ScrollStartNotification &&
+        notification.metrics.axis == Axis.vertical) {
+      if (showMoreMenu) {
+        setState(() {
+          showMoreMenu = false;
+          _moreMenuController.reverse();
+        });
+      }
+    }
     if (notification is UserScrollNotification &&
         notification.metrics.axis == Axis.vertical) {
       if (notification.direction == ScrollDirection.forward) {
@@ -68,13 +84,49 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    _fabAnimationController.dispose();
+    _hideBottomBarAnimationController.dispose();
+    _moreMenuController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: false,
-      body: NotificationListener<ScrollNotification>(
-        onNotification: onScrollNotification,
-        child: pageList[_bottomNavIndex],
+      body: Stack(
+        children: [
+          NotificationListener<ScrollNotification>(
+            onNotification: onScrollNotification,
+            child: pageList[_bottomNavIndex],
+          ),
+          if (showMoreMenu)
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                setState(() {
+                  showMoreMenu = false;
+                  _moreMenuController.reverse();
+                });
+              },
+            ),
+          if (showMoreMenu)
+            Positioned(
+              right: 16,
+              bottom: 80,
+              child: _MoreFloatingMenu(
+                controller: _moreMenuController,
+                onItemTap: () {
+                  setState(() {
+                    showMoreMenu = false;
+                    _moreMenuController.reverse();
+                  });
+                },
+              ),
+            ),
+        ],
       ),
       floatingActionButton: FadeTransition(
         opacity: _fabAnimationController,
@@ -105,7 +157,24 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         gapLocation: GapLocation.center,
         leftCornerRadius: 24,
         rightCornerRadius: 24,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
+        onTap: (index) {
+          if (index == 3) {
+            setState(() {
+              showMoreMenu = !showMoreMenu;
+              if (showMoreMenu) {
+                _moreMenuController.forward(from: 0);
+              } else {
+                _moreMenuController.reverse();
+              }
+            });
+          } else {
+            setState(() {
+              showMoreMenu = false;
+              _moreMenuController.reverse();
+              _bottomNavIndex = index;
+            });
+          }
+        },
         hideAnimationController: _hideBottomBarAnimationController,
         shadow: const BoxShadow(
           offset: Offset(0, 1),
@@ -114,6 +183,139 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           color: Colors.grey,
         ),
       ),
+    );
+  }
+}
+
+class MoreMenuSheet extends StatelessWidget {
+  const MoreMenuSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _MoreMenuItem(icon: Icons.people_alt_outlined, text: 'Tentang Kami'),
+          _MoreMenuItem(icon: Icons.work_outline, text: 'Partner & Career'),
+          _MoreMenuItem(icon: Icons.star_border, text: 'Event & Promo'),
+          _MoreMenuItem(icon: Icons.favorite_border, text: 'Feedback'),
+        ],
+      ),
+    );
+  }
+}
+
+class _MoreMenuItem extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _MoreMenuItem({required this.icon, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(40),
+      ),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        title: Text(text, style: const TextStyle(fontWeight: FontWeight.w600)),
+        trailing: Icon(icon, color: Colors.blue),
+        onTap: () {
+          // Handle tap (e.g., navigate to new screen or show toast)
+          Navigator.pop(context); // Close modal
+        },
+      ),
+    );
+  }
+}
+
+class _MoreFloatingMenu extends StatelessWidget {
+  final AnimationController controller;
+  final VoidCallback onItemTap;
+
+  const _MoreFloatingMenu({
+    super.key,
+    required this.controller,
+    required this.onItemTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final items = [
+      {'icon': Icons.people_outline, 'label': 'Tentang Kami'},
+      {'icon': Icons.work_outline, 'label': 'Partner & Career'},
+      {'icon': Icons.star_border, 'label': 'Event & Promo'},
+      {'icon': Icons.favorite_border, 'label': 'Feedback'},
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: List.generate(items.length, (i) {
+        // Animate bottom-to-top
+        final index = items.length - 1 - i;
+        final animation = Tween<Offset>(
+          begin: const Offset(0, 0.2),
+          end: Offset.zero,
+        ).animate(
+          CurvedAnimation(
+            parent: controller,
+            curve: Interval(i * 0.1, 1.0, curve: Curves.easeOut),
+          ),
+        );
+
+        final fade = CurvedAnimation(
+          parent: controller,
+          curve: Interval(i * 0.1, 1.0, curve: Curves.easeOut),
+        );
+
+        return SlideTransition(
+          position: animation,
+          child: FadeTransition(
+            opacity: fade,
+            child: GestureDetector(
+              onTap: onItemTap,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(items[index]['icon'] as IconData, color: Colors.blue),
+                    const SizedBox(width: 8),
+                    Text(
+                      items[index]['label'] as String,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }
