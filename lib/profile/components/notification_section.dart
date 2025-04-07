@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smkdev_hospital/profile/notification_detail_page.dart';
 
 class NotificationSection extends StatelessWidget {
   const NotificationSection({super.key});
@@ -110,7 +111,12 @@ class NotificationTile extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          // TODO: handle tap
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const NotificationDetailPage(),
+            ),
+          );
         },
         child: Container(
           padding: const EdgeInsets.all(12),
