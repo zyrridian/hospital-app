@@ -1,7 +1,9 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:smkdev_hospital/profile/components/notification_section.dart';
-import 'package:smkdev_hospital/profile/components/history_section.dart';
+import 'package:smkdev_hospital/features/profile/components/notification_section.dart';
+import 'package:smkdev_hospital/features/profile/components/history_section.dart';
 
+@RoutePage()
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 

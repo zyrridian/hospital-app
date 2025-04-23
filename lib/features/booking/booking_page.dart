@@ -1,7 +1,9 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:smkdev_hospital/booking/booking_data.dart';
-import 'package:smkdev_hospital/booking/booking_detail_page.dart';
+import 'package:smkdev_hospital/features/booking/booking_data.dart';
+import 'package:smkdev_hospital/features/booking/booking_detail_page.dart';
 
+@RoutePage()
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
 

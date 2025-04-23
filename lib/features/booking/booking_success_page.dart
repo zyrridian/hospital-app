@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smkdev_hospital/main/main_page.dart';
-import 'package:smkdev_hospital/profile/profile_page.dart';
+import 'package:smkdev_hospital/features/main/main_page.dart';
+import 'package:smkdev_hospital/features/profile/profile_page.dart';
 
 class BookingSuccessPage extends StatefulWidget {
   const BookingSuccessPage({super.key});

@@ -1,14 +1,16 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:smkdev_hospital/booking/booking_page.dart';
-import 'package:smkdev_hospital/home/home_page.dart';
-import 'package:smkdev_hospital/more/about_us_page.dart';
-import 'package:smkdev_hospital/partnercareer/partner_career_page.dart';
-import 'package:smkdev_hospital/service/service_page.dart';
-import 'package:smkdev_hospital/more/more_page.dart';
-import 'package:smkdev_hospital/profile/profile_page.dart';
+import 'package:smkdev_hospital/features/booking/booking_page.dart';
+import 'package:smkdev_hospital/features/home/home_page.dart';
+import 'package:smkdev_hospital/features/more/about_us_page.dart';
+import 'package:smkdev_hospital/features/partnercareer/partner_career_page.dart';
+import 'package:smkdev_hospital/features/service/service_page.dart';
+import 'package:smkdev_hospital/features/more/more_page.dart';
+import 'package:smkdev_hospital/features/profile/profile_page.dart';
 
+@RoutePage()
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 

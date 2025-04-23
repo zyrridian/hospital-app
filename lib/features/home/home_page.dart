@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:smkdev_hospital/home/home_data.dart';
+import 'package:smkdev_hospital/features/home/home_data.dart';
 
+@RoutePage()
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 

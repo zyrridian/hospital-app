@@ -1,16 +1,18 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:smkdev_hospital/partnercareer/partner_career_data.dart';
-import 'package:smkdev_hospital/partnercareer/partner_career_detail_page.dart';
+import 'package:smkdev_hospital/features/service/service_data.dart';
+import 'package:smkdev_hospital/features/service/service_detail_page.dart';
 
-class PartnerCareerPage extends StatefulWidget {
-  const PartnerCareerPage({super.key});
+@RoutePage()
+class LayananPage extends StatefulWidget {
+  const LayananPage({super.key});
 
   @override
-  State<PartnerCareerPage> createState() => _PartnerCareerPageState();
+  State<LayananPage> createState() => _LayananPageState();
 }
 
-class _PartnerCareerPageState extends State<PartnerCareerPage> {
+class _LayananPageState extends State<LayananPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
               children: [
                 _buildAppBar(),
                 _buildSearchBar(),
-                _buildPartnerSection(),
+                _buildFacilitySection(),
                 _buildEventPromoSection()
               ],
             ),
@@ -40,7 +42,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
     return const Padding(
       padding: EdgeInsets.only(left: 24, right: 24, top: 24),
       child: Text(
-        'Partner & Career',
+        'Layanan',
         textAlign: TextAlign.left,
         style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
       ),
@@ -71,7 +73,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
                 style: const TextStyle(fontSize: 14),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Search partner & lowongan',
+                  hintText: 'Search dokter, fasilitas & layanan',
                   hintStyle: TextStyle(color: Colors.grey.withOpacity(0.6)),
                 ),
               ),
@@ -82,7 +84,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
     );
   }
 
-  Widget _buildPartnerSection() {
+  Widget _buildFacilitySection() {
     return Container(
       padding: const EdgeInsets.only(top: 24.0),
       color: Colors.white,
@@ -92,7 +94,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              'Partner',
+              'Fasilitas dan Layanan Terkini',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -101,14 +103,14 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
           ),
           const SizedBox(height: 8),
           SizedBox(
-            height: 160.0,
+            height: 200.0,
             child: ListView.builder(
-              itemCount: partnerData.length,
+              itemCount: facilityData.length,
               physics: const ClampingScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 12),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                final facility = partnerData[index];
+                final facility = facilityData[index];
                 return InkWell(
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
@@ -116,8 +118,8 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PartnerCareerDetailPage(
-                          type: 'lowongan',
+                        builder: (context) => ServiceDetailPage(
+                          type: 'facility',
                           title: facility['title'] ?? '',
                           content: facility['content'] ?? '',
                           date: facility['date'] ?? '',
@@ -127,7 +129,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
                       ),
                     );
                   },
-                  child: _buildPartnerItem(facility),
+                  child: _buildFacilityItem(facility),
                 );
               },
             ),
@@ -137,7 +139,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
     );
   }
 
-  Widget _buildPartnerItem(Map<String, String> facility) {
+  Widget _buildFacilityItem(Map<String, String> facility) {
     return Container(
       width: 180,
       color: Colors.white,
@@ -148,21 +150,43 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                    width: 0.5,
-                  ),
-                ),
-                clipBehavior: Clip.hardEdge,
+              child: Expanded(
                 child: Image.asset(
                   facility['image'] ?? 'assets/images/test.png',
-                  // fit: BoxFit.cover,
-                  // width: double.infinity,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black.withOpacity(0),
+                      Colors.black.withOpacity(0.3),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  facility['title'] ?? '',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -182,7 +206,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              'Lowongan',
+              'Event & Promo',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.w600,
@@ -191,12 +215,12 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
           ),
           const SizedBox(height: 2),
           ListView.builder(
-            itemCount: lowonganData.length,
+            itemCount: eventPromoData.length,
             physics: const ClampingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 12),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              final eventPromo = lowonganData[index];
+              final eventPromo = eventPromoData[index];
               return InkWell(
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
@@ -204,7 +228,7 @@ class _PartnerCareerPageState extends State<PartnerCareerPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PartnerCareerDetailPage(
+                      builder: (context) => ServiceDetailPage(
                         type: eventPromo['type'] ?? '',
                         title: eventPromo['title'] ?? '',
                         content: eventPromo['content'] ?? '',

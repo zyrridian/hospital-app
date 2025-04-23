@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smkdev_hospital/profile/notification_detail_page.dart';
+import 'package:smkdev_hospital/features/profile/notification_detail_page.dart';
 
 class NotificationSection extends StatelessWidget {
   const NotificationSection({super.key});

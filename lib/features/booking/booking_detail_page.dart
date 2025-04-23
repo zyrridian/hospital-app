@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smkdev_hospital/booking/booking_confirm_page.dart';
+import 'package:smkdev_hospital/features/booking/booking_confirm_page.dart';
 
 class BookingDetailPage extends StatefulWidget {
   final Map<String, dynamic> doctor;
